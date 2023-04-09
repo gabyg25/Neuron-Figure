@@ -7,12 +7,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-epocas = 10
 img_height = 100  # alto
 img_width = 100  # ancho
 
-train_ds = tf.keras.utils.image_dataset_from_directory("./Dataset/Entrenamiento", image_size=(img_height, img_width), batch_size=240)
-val_ds = tf.keras.utils.image_dataset_from_directory("./Dataset/Validacion", image_size=(img_height, img_width), batch_size=213)
+train_ds = tf.keras.utils.image_dataset_from_directory("./Dataset/Entrenamiento", image_size=(img_height, img_width), batch_size=60)
+val_ds = tf.keras.utils.image_dataset_from_directory("./Dataset/Validacion", image_size=(img_height, img_width), batch_size=60)
 class_names = train_ds.class_names
 
 train_ds = train_ds.cache().prefetch(buffer_size=10)

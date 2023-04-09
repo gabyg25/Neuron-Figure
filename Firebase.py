@@ -11,7 +11,8 @@ blobs = bucket.list_blobs()
 
 os.makedirs('images/', exist_ok=True)
 
-for blob in blobs:
-    if blob.content_type.startswith('image/'):
-        filename = os.path.join('images/', blob.name.split('clasificador/')[1])
-        blob.download_to_filename(filename)
+def extraccion():
+    for blob in blobs:
+        if blob.content_type.startswith('image/'):
+            filename = os.path.join('images/', blob.name.split('clasificador/')[1])
+            blob.download_to_filename(filename)
