@@ -6,6 +6,9 @@ from keras import layers
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from sklearn.model_selection import cross_val_score
+from keras.wrappers.scikit_learn import KerasClassifier
+
 
 img_height = 100  # alto
 img_width = 100  # ancho
@@ -38,6 +41,8 @@ modelo = Sequential([
 
 modelo.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=['accuracy'])
 
+def retorno_modelo():
+        return modelo
 
 history = modelo.fit(
         train_ds, 
@@ -81,4 +86,16 @@ sns.heatmap(consfusion_matrix.numpy(), xticklabels=class_names,yticklabels=class
 plt.title('Matriz de confusion')
 plt.xlabel('Predicciones')
 plt.ylabel('Datos')
+plt.show()
+
+# Validacion Cruzada
+
+keras_model = KerasClassifier(build_fn = retorno_modelo, epochs = 20 , batch_size=180)
+scores = cross_val_score(keras_model, imgAux, labelsAux, cv=5)
+mean_score = np.mean(scores)
+plt.bar(range(len(scores)), scores)
+plt.axhline(y = mean_score, color='r', linestyle='-')
+plt.xlabel('Fold')
+plt.ylabel('Score')
+plt.title('Cross-validation scores')
 plt.show()
